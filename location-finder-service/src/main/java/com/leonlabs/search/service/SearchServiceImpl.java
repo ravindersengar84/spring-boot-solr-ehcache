@@ -3,7 +3,7 @@ package com.leonlabs.search.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +45,11 @@ public class SearchServiceImpl implements SearchService {
 			Pageable pageable = new PageRequest(startIndex, maxResult, sort);
 			List<City> cities = citySearchRepository.findByNameContainingIgnoreCase(freeTxt, pageable);
 			
-			Optional.ofNullable(cities).ifPresent(city -> {
+			listCity = cities.stream().map(city ->{
 				CityView cityVO = new CityView();
 				BeanUtils.copyProperties(city, cityVO);
-				listCity.add(cityVO);
-			});
-			
+				return cityVO;
+			}).collect(Collectors.toList());
 			return listCity;
 		} catch (Exception e) {
 			throw new ApplicationException(AppMessage.GeneralException.GENERAL_SERVER_EXCEPTION, e);
@@ -64,15 +63,14 @@ public class SearchServiceImpl implements SearchService {
 		Integer startIndex = searchQuery.getStartIndex();
 		List<CountryView> listCountry = new ArrayList<>();
 		try {
-			//solrSearchRepository.findByName("Phone");
 			Sort sort = new Sort(new Sort.Order(Direction.ASC, "name"));
 			Pageable pageable = new PageRequest(startIndex, maxResult, sort);
 			List<Country> countries = countrySearchRepository.findByNameContainingIgnoreCase(freeTxt, pageable);
-			Optional.ofNullable(countries).ifPresent(city -> {
+			listCountry = countries.stream().map(country ->{
 				CountryView countryVO = new CountryView();
-				BeanUtils.copyProperties(city, countryVO);
-				listCountry.add(countryVO);
-			});
+				BeanUtils.copyProperties(country, countryVO);
+				return countryVO;
+			}).collect(Collectors.toList());
 			return listCountry;
 		} catch (Exception e) {
 			throw new ApplicationException(AppMessage.GeneralException.GENERAL_SERVER_EXCEPTION, e);
