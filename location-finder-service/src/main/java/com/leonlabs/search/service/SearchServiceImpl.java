@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +14,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.leonlabs.search.repository.jpa.CitySearchRepository;
-import com.leonlabs.search.repository.jpa.CountrySearchRepository;
 import com.leonlabs.search.entity.City;
 import com.leonlabs.search.entity.Country;
 import com.leonlabs.search.exception.ApplicationException;
 import com.leonlabs.search.exception.NoResultFoundException;
+import com.leonlabs.search.repository.jpa.CitySearchRepository;
+import com.leonlabs.search.repository.jpa.CountrySearchRepository;
 import com.leonlabs.search.util.message.AppMessage;
 import com.leonlabs.search.view.CityView;
 import com.leonlabs.search.view.CountryView;
@@ -30,16 +28,11 @@ import com.leonlabs.search.view.SearchQuery;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-	private static final Logger log = LoggerFactory.getLogger(SearchService.class);
-
 	@Autowired
-	public CitySearchRepository citySearchRepository;
+	private CitySearchRepository citySearchRepository;
 	
-	/*@Autowired
-	public SolrSearchRepository solrSearchRepository;*/
-
 	@Autowired
-	public CountrySearchRepository countrySearchRepository;
+	private CountrySearchRepository countrySearchRepository;
 
 	@Transactional(readOnly=true)
 	public List<CityView> getCities(SearchQuery searchQuery) throws ApplicationException, NoResultFoundException {

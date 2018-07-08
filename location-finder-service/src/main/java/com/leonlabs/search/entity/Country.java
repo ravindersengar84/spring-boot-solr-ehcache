@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "country")
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class Country extends BaseEntity implements GeographicalSearchType {
+public class Country extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
 
