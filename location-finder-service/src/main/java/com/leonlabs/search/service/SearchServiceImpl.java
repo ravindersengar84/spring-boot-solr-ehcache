@@ -44,11 +44,13 @@ public class SearchServiceImpl implements SearchService {
 			Sort sort = new Sort(new Sort.Order(Direction.ASC, "name"));
 			Pageable pageable = new PageRequest(startIndex, maxResult, sort);
 			List<City> cities = citySearchRepository.findByNameContainingIgnoreCase(freeTxt, pageable);
+			
 			Optional.ofNullable(cities).ifPresent(city -> {
 				CityView cityVO = new CityView();
 				BeanUtils.copyProperties(city, cityVO);
 				listCity.add(cityVO);
 			});
+			
 			return listCity;
 		} catch (Exception e) {
 			throw new ApplicationException(AppMessage.GeneralException.GENERAL_SERVER_EXCEPTION, e);

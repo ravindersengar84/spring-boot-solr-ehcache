@@ -15,8 +15,6 @@ public class CityView extends BaseView implements GeoLocation{
 
 	private String name;
 
-	private Integer zipcode;
-	
-	private Integer countryId;
+	private Integer stateId;
 
 }
