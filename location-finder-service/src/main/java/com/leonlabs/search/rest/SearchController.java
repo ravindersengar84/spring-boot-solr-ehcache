@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +40,7 @@ public class SearchController extends AbstractRestHandler {
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "All cities with matching search criteria", notes = "Maximum of 10 cities will be populated at a time", response = SearchResult.class)
 	public ResponseEntity<List<CityView>> getAllCitiesWithRequestedCriteria(
-			@ApiParam(value = "The module name.", required = true) @PathVariable("name") SearchQuery searchQuery,
-			@RequestParam("coverage_amount") BigDecimal coverageAmount) throws Exception {
+			@ApiParam(value = "The module name.", required = true) @RequestBody SearchQuery searchQuery) throws Exception {
 		List<CityView> searchResult;
 		try {
 			searchResult = searchService.getCities(searchQuery);
@@ -55,8 +55,7 @@ public class SearchController extends AbstractRestHandler {
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "All countries with matching search criteria", notes = "Maximum of 10 cities will be populated at a time", response = SearchResult.class)
 	public ResponseEntity<List<CountryView>> getAllCountriesWithRequestedCriteria(
-			@ApiParam(value = "The module name.", required = true) @PathVariable("name") SearchQuery searchQuery,
-			@RequestParam("coverage_amount") BigDecimal coverageAmount) throws Exception {
+			@ApiParam(value = "The module name.", required = true) @RequestBody SearchQuery searchQuery) throws Exception {
 		List<CountryView> searchResult;
 		try {
 			searchResult = searchService.getCountries(searchQuery);
